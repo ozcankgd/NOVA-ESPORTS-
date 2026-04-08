@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVA ESPORTS | PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #39FF14; --bg: #050505; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Orbitron', sans-serif; }
+        body { background: var(--bg); color: white; overflow-x: hidden; }
+
+        /* Hareketli Arka Plan */
+        .grid-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(57, 255, 20, 0.05)), url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            z-index: -1;
+        }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; background: rgba(0,0,0,0.9);
+            border-bottom: 2px solid var(--neon); box-shadow: 0 0 15px var(--neon);
+        }
+
+        .logo { font-size: 1.5rem; color: var(--neon); text-shadow: 0 0 10px var(--neon); }
+        .menu-icon { font-size: 2rem; color: var(--neon); cursor: pointer; }
+
+        .container { padding: 40px 5%; }
+        h2 { text-align: center; color: var(--neon); margin-bottom: 30px; letter-spacing: 5px; text-shadow: 0 0 10px var(--neon); }
+
+        /* Oyuncu Kartları */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card {
+            background: #111; border: 1px solid #222; border-radius: 15px; padding: 20px;
+            text-align: center; position: relative; transition: 0.3s;
+        }
+        .card:hover { border-color: var(--neon); box-shadow: 0 0 20px var(--neon); transform: translateY(-5px); }
+        .p-img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--neon); margin-bottom: 15px; }
+        .fps { position: absolute; top: 15px; right: 15px; background: var(--neon); color: black; padding: 3px 8px; border-radius: 5px; font-weight: bold; font-size: 12px; }
+
+        /* Haberler ve Turnuva */
+        .info-box { background: rgba(57, 255, 20, 0.1); border-left: 5px solid var(--neon); padding: 20px; margin: 20px 0; border-radius: 5px; }
+
+        /* Sponsorlar */
+        .footer { text-align: center; padding: 50px; border-top: 1px solid #222; margin-top: 50px; }
+        .epinfy { font-size: 2rem; color: white; letter-spacing: 10px; text-shadow: 0 0 10px white; opacity: 0.7; }
+
+        /* Admin Panel */
+        #admin { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:999; justify-content:center; align-items:center; flex-direction:column; }
+        input { padding:12px; background:#222; border:1px solid var(--neon); color:white; text-align:center; margin-bottom:15px; outline:none; }
+        .btn { background:var(--neon); color:black; padding:10px 30px; border:none; cursor:pointer; font-weight:bold; }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <nav>
+        <div class="logo">NOVA ESPORTS</div>
+        <div class="menu-icon" onclick="toggleAdmin()">☰</div>
+    </nav>
+
+    <div class="container">
+        <h2>KADRO</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="fps">120 FPS</div>
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="p-img">
+                <h3>PARABOY</h3>
+                <p style="color:#888">Yaş: 22</p>
+            </div>
+            <div class="card">
+                <div class="fps">90 FPS</div>
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka" class="p-img">
+                <h3>ORDER</h3>
+                <p style="color:#888">Yaş: 21</p>
+            </div>
+        </div>
+
+        <h2 style="margin-top:50px">TURNUVALAR & HABERLER</h2>
+        <div class="info-box">
+            <h3>PMGC Hazırlıkları Başladı</h3>
+            <p>Nova Esports olarak yeni sezona bomba gibi giriyoruz! Antrenmanlarımız Epinfy desteğiyle devam ediyor.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p style="margin-bottom:10px; color:#555">ANA SPONSOR</p>
+        <div class="epinfy">EPINFY</div>
+    </div>
+
+    <div id="admin">
+        <h2>YETKİLİ GİRİŞİ</h2>
+        <input type="password" id="pass" placeholder="ŞİFRE">
+        <button class="btn" onclick="login()">GİRİŞ YAP</button>
+        <p onclick="toggleAdmin()" style="margin-top:15px; cursor:pointer; color:#555">Kapat</p>
+    </div>
+
+    <script>
+        function toggleAdmin() {
+            let a = document.getElementById('admin');
+            a.style.display = (a.style.display === 'flex') ? 'none' : 'flex';
+        }
+        function login() {
+            if(document.getElementById('pass').value === "1234") {
+                alert("Hoşgeldin Admin! Panel aktif.");
+            } else {
+                alert("Hatalı Şifre!");
+            }
+        }
+    </script>
+</body>
+</html>
+
