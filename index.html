@@ -1,0 +1,55 @@
+<!DOCTYPE html> <html lang="tr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Esports Team</title> <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet"> <style> body { margin: 0; font-family: 'Orbitron', sans-serif; background: radial-gradient(circle at top, #001a33, #000); color: white; } /* HEADER */ header { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(0,0,0,0.8); border-bottom: 2px solid #00ffcc; } .logo { width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 0 10px #00ffcc; } nav a { color: white; margin: 0 12px; text-decoration: none; transition: 0.3s; } nav a:hover { color: #00ffcc; } /* HERO */ .hero { text-align: center; padding: 60px 20px; } .hero h1 { font-size: 40px; text-shadow: 0 0 15px #00ffcc; } /* CARDS */ .card { background: rgba(255,255,255,0.05); padding: 20px; margin: 15px; border-radius: 15px; text-align: center; transition: 0.3s; box-shadow: 0 0 10px rgba(0,255,204,0.2); } .card:hover { transform: translateY(-5px); box-shadow: 0 0 20px rgba(0,255,204,0.6); } .player-img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid #00ffcc; } /* RESULTS */ .result-img { width: 100%; border-radius: 10px; margin-top: 10px; border: 1px solid #00ffcc; } /* SOCIAL */ .social a { color: #00ffcc; margin: 10px; font-weight: bold; text-decoration: none; } /* GRID */ .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); } /* ADMIN */ #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); padding: 20px; } input, textarea { padding: 10px; margin: 5px; width: 90%; } button { background: #00ffcc; border: none; padding: 10px; cursor: pointer; font-weight: bold; } </style> </head> <body> <header> <div style="display:flex; align-items:center; gap:10px;"> <img id="logo" class="logo"> <h2 id="teamName">TAKIM</h2> </div>
+<nav>
+    <a href="#home">Ana Sayfa</a>
+    <a href="#players">Oyuncular</a>
+    <a href="#results">Sonuçlar</a>
+    <a href="#contact">İletişim</a>
+    <a href="#" onclick="openAdmin()">Admin</a>
+</nav>
+</header> <section class="hero" id="home"> <h1>PRO ESPORTS TEAM</h1> <p id="teamDesc"></p>
+<div class="social">
+    <a id="insta" href="#">Instagram</a>
+    <a id="discord" href="#">Discord</a>
+</div>
+</section> <!-- PLAYERS --> <section id="players"> <h2 style="text-align:center;">Oyuncular</h2>
+<div class="grid">
+    <div class="card">
+        <img id="img1" class="player-img">
+        <p id="p1"></p>
+    </div>
+    <div class="card">
+        <img id="img2" class="player-img">
+        <p id="p2"></p>
+    </div>
+    <div class="card">
+        <img id="img3" class="player-img">
+        <p id="p3"></p>
+    </div>
+    <div class="card">
+        <img id="img4" class="player-img">
+        <p id="p4"></p>
+    </div>
+</div>
+</section> <!-- RESULTS --> <section id="results"> <h2 style="text-align:center;">SCRIM SONUÇLARI</h2> <div id="resultList" class="grid"></div> </section> <section id="contact"> <h2 style="text-align:center;">İletişim</h2> <p id="contactInfo" style="text-align:center;"></p> </section> <!-- ADMIN --> <div id="adminPanel"> <h2>Admin Panel</h2>
+<input id="teamInput" placeholder="Takım Adı">
+<input id="descInput" placeholder="Açıklama">
+<input id="logoInput" placeholder="Logo URL">
+<input id="instaInput" placeholder="Instagram">
+<input id="discordInput" placeholder="Discord">
+<h3>Oyuncular</h3>
+<input id="p1n" placeholder="Oyuncu 1">
+<input id="p1i" placeholder="Foto URL">
+<input id="p2n" placeholder="Oyuncu 2">
+<input id="p2i" placeholder="Foto URL">
+<input id="p3n" placeholder="Oyuncu 3">
+<input id="p3i" placeholder="Foto URL">
+<input id="p4n" placeholder="Oyuncu 4">
+<input id="p4i" placeholder="Foto URL">
+<h3>Sonuç Ekle</h3>
+<textarea id="resultText"></textarea>
+<input id="resultImg">
+<button onclick="addResult()">Ekle</button>
+<button onclick="saveData()">Kaydet</button>
+<button onclick="closeAdmin()">Kapat</button>
+</div> <script> let pass = localStorage.getItem("adminPass"); if (!pass) { let p = prompt("Admin şifresi oluştur:"); localStorage.setItem("adminPass", p); } function openAdmin() { let p = prompt("Şifre:"); if (p === localStorage.getItem("adminPass")) { adminPanel.style.display = "block"; } else { alert("Yanlış şifre!"); } } function closeAdmin() { adminPanel.style.display = "none"; } function saveData() { localStorage.setItem("teamName", teamInput.value); localStorage.setItem("teamDesc", descInput.value); localStorage.setItem("logo", logoInput.value); localStorage.setItem("insta", instaInput.value); localStorage.setItem("discord", discordInput.value); localStorage.setItem("p1", p1n.value); localStorage.setItem("p1i", p1i.value); localStorage.setItem("p2", p2n.value); localStorage.setItem("p2i", p2i.value); localStorage.setItem("p3", p3n.value); localStorage.setItem("p3i", p3i.value); localStorage.setItem("p4", p4n.value); localStorage.setItem("p4i", p4i.value); loadData(); } function addResult() { let data = JSON.parse(localStorage.getItem("results") || "[]"); data.push({ text: resultText.value, img: resultImg.value }); localStorage.setItem("results", JSON.stringify(data)); loadResults(); } function loadResults() { let data = JSON.parse(localStorage.getItem("results") || "[]"); resultList.innerHTML = ""; data.forEach(r => { resultList.innerHTML += ` <div class="card"> <p>${r.text}</p> <img class="result-img" src="${r.img}"> </div>`; }); } funct
+  
