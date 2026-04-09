@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA ESPORTS</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: black;
+  color: #00ff88;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 2px solid #00ff88;
+}
+
+.menu {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+/* NAV */
+nav {
+  display: none;
+  flex-direction: column;
+  background: #111;
+}
+
+nav a {
+  padding: 10px;
+  border-bottom: 1px solid #00ff88;
+  cursor: pointer;
+}
+
+/* SECTION */
+section {
+  padding: 20px;
+}
+
+/* CARD */
+.card {
+  border: 1px solid #00ff88;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 0 15px #00ff88;
+  transform: scale(1.03);
+}
+
+/* IMG */
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* ADMIN */
+.hidden {
+  display: none;
+}
+
+/* BUTTON */
+button {
+  background: #00ff88;
+  border: none;
+  padding: 10px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+/* SPONSOR */
+.sponsor {
+  text-align: center;
+  font-size: 20px;
+  border-top: 2px solid #00ff88;
+  padding: 15px;
+}
+
+/* ANIMASYON */
+body::before {
+  content: "";
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(#00ff88 1px, transparent 1px);
+  animation: move 15s linear infinite;
+}
+
+@keyframes move {
+  from { transform: translate(0,0); }
+  to { transform: translate(-200px,-200px); }
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <h1>NOVA ESPORTS</h1>
+  <div class="menu" onclick="toggleMenu()">☰</div>
+</header>
+
+<nav id="nav">
+  <a href="#home">Ana Sayfa</a>
+  <a href="#players">Oyuncular</a>
+  <a href="#tournaments">Turnuvalar</a>
+  <a href="#news">Haberler</a>
+  <a href="#contact">İletişim</a>
+  <a onclick="adminLogin()">Yetkili</a>
+</nav>
+
+<section id="home">
+  <h2>Hoş Geldiniz</h2>
+  <p>PUBG MOBILE NOVA ESPORTS TAKIMI</p>
+</section>
+
+<section id="players">
+  <h2>Oyuncular</h2>
+  <div id="playerList"></div>
+</section>
+
+<section id="tournaments">
+  <h2>Turnuvalar</h2>
+  <div id="tournamentList"></div>
+</section>
+
+<section id="news">
+  <h2>Haberler</h2>
+  <div id="newsList"></div>
+</section>
+
+<section class="sponsor">
+  💚 Sponsor: EPINFY 💚
+</section>
+
+<section id="contact">
+  <h2>İletişim</h2>
+  <p>Instagram: NOVA ESPORTS</p>
+</section>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="hidden">
+  <h2>Admin Panel</h2>
+
+  <h3>Oyuncu Ekle</h3>
+  <input id="name" placeholder="İsim"><br>
+  <input id="age" placeholder="Yaş"><br>
+  <input id="fps" placeholder="FPS"><br>
+  <input id="photo" placeholder="Foto linki"><br>
+  <button onclick="addPlayer()">Ekle</button>
+
+  <h3>Turnuva Ekle</h3>
+  <input id="tName" placeholder="Turnuva adı"><br>
+  <input id="tPhoto" placeholder="Foto linki"><br>
+  <input id="tDesc" placeholder="Açıklama"><br>
+  <button onclick="addTournament()">Ekle</button>
+
+  <h3>Haber Ekle</h3>
+  <input id="newsText" placeholder="Haber"><br>
+  <button onclick="addNews()">Ekle</button>
+</div>
+
+<script>
+let password = "1234";
+
+/* MENU */
+function toggleMenu() {
+  let nav = document.getElementById("nav");
+  nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+}
+
+/* ADMIN */
+function adminLogin() {
+  let input = prompt("Şifre:");
+  if(input === password) {
+    document.getElementById("adminPanel").classList.remove("hidden");
+  } else {
+    alert("Yanlış şifre!");
+  }
+}
+
+/* PLAYER */
+function addPlayer() {
+  let name = document.getElementById("name").value;
+  let age = document.getElementById("age").value;
+  let fps = document.getElementById("fps").value;
+  let photo = document.getElementById("photo").value;
+
+  let div = document.createElement("div");
+  div.className = "card";
+
+  div.innerHTML = `
+    <img src="${photo}">
+    <h3>${name}</h3>
+    <p>Yaş: ${age}</p>
+    <p>FPS: ${fps}</p>
+  `;
+
+  document.getElementById("playerList").appendChild(div);
+}
+
+/* TOURNAMENT */
+function addTournament() {
+  let name = document.getElementById("tName").value;
+  let photo = document.getElementById("tPhoto").value;
+  let desc = document.getElementById("tDesc").value;
+
+  let div = document.createElement("div");
+  div.className = "card";
+
+  div.innerHTML = `
+    <img src="${photo}">
+    <h3>${name}</h3>
+    <p>${desc}</p>
+  `;
+
+  document.getElementById("tournamentList").appendChild(div);
+}
+
+/* NEWS */
+function addNews() {
+  let text = document.getElementById("newsText").value;
+
+  let div = document.createElement("div");
+  div.className = "card";
+  div.innerHTML = `<p>${text}</p>`;
+
+  document.getElementById("newsList").appendChild(div);
+}
+</script>
+
+</body>
+</html>
